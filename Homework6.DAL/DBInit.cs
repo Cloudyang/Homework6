@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Homework6.Common;
+using Homework6.Common.Utility;
 
 namespace Homework6.DAL
 {
@@ -14,21 +14,22 @@ namespace Homework6.DAL
     public class DBInit
     {
         private static Logger logger = new Logger(typeof(DBInit));
+        private static SqlHelper sqlHelper = new SqlHelper();
 
         /// <summary>
         /// 谨慎使用  会全部删除数据库并重新创建！
         /// </summary>
-        public static void InitCommodityTable()
+        public static void InitCommodityTable(string sourceName,int num=31)
         {
             #region Delete
             try
             {
                 StringBuilder sb = new StringBuilder();
-                for (int i = 1; i < 31; i++)
+                for (int i = 1; i < num; i++)
                 {
-                    sb.AppendFormat("DROP TABLE [dbo].[JD_Commodity_{0}];", i.ToString("000"));
+                    sb.AppendFormat($"DROP TABLE [dbo].[{sourceName}_Commodity_{ i.ToString("000")}];");
                 }
-                SqlHelper.ExecuteNonQuery(sb.ToString());
+                sqlHelper.ExecuteNonQuery(sb.ToString());
             }
             catch (Exception ex)
             {
@@ -48,9 +49,9 @@ namespace Homework6.DAL
             try
             {
                 StringBuilder sb = new StringBuilder();
-                for (int i = 1; i < 31; i++)
+                for (int i = 1; i < num; i++)
                 {
-                    sb.AppendFormat(@"CREATE TABLE [dbo].[JD_Commodity_{0}](
+                    sb.AppendFormat(@"CREATE TABLE [dbo].[{1}_Commodity_{0}](
 	                                    [Id] [int] IDENTITY(1,1) NOT NULL,
 	                                    [ProductId] [bigint] NULL,
 	                                    [CategoryId] [int] NULL,
@@ -62,9 +63,9 @@ namespace Homework6.DAL
                             (
                             	[Id] ASC
                             )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-                            ) ON [PRIMARY];", i.ToString("000"));
+                            ) ON [PRIMARY];", i.ToString("000"),sourceName);
                 }
-                SqlHelper.ExecuteNonQuery(sb.ToString());
+                sqlHelper.ExecuteNonQuery(sb.ToString());
             }
             catch (Exception ex)
             {
@@ -77,14 +78,14 @@ namespace Homework6.DAL
         /// <summary>
         /// 谨慎使用  会全部删除数据库并重新创建！
         /// </summary>
-        public static void InitCategoryTable()
+        public static void InitCategoryTable(string sourcename)
         {
             #region Delete
             try
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendFormat("DROP TABLE [dbo].[Category];");
-                SqlHelper.ExecuteNonQuery(sb.ToString());
+                sb.AppendFormat($"DROP TABLE [dbo].[{sourcename}_Category];");
+                sqlHelper.ExecuteNonQuery(sb.ToString());
             }
             catch (Exception ex)
             {
@@ -104,7 +105,7 @@ namespace Homework6.DAL
             try
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendFormat(@"CREATE TABLE [dbo].[Category](
+                sb.AppendFormat($@"CREATE TABLE [dbo].[{sourcename}_Category](
 	                                    [Id] [int] IDENTITY(1,1) NOT NULL,
 	                                    [Code] [varchar](100) NULL,
 	                                    [ParentCode] [varchar](100) NULL,
@@ -118,7 +119,7 @@ namespace Homework6.DAL
                                      )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
                                      ) ON [PRIMARY];");
 
-                SqlHelper.ExecuteNonQuery(sb.ToString());
+                sqlHelper.ExecuteNonQuery(sb.ToString());
             }
             catch (Exception ex)
             {

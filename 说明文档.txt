@@ -1,2 +1,5 @@
+Homework6控制台程序是自行尝试了多种方法实现对baidu网站首页抓取html
+
 任务作业1：对老师原有Ruanmou.Crawler解决方案做了类库扩展分离:
-1.1 将原有Utility放入类库Homework6.Common中并修改名称空间名
+1.1 将原有Utility放入类库Homework6.Common中并修改名称空间名,并增设接口类Homework6.IDAL,Homework6.IService 实现类库Homework6.DAL,Homework6.Service 及实体类库Homework6.Model
+1.2 将原有DBInit.cs移入到Homework.DAL类库中，并增设参数做了通用化处理

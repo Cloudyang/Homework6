@@ -49,20 +49,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Homework6.Common\Homework6.Common.csproj">
-      <Project>{19ed0547-cb5c-46e8-8f73-ec01cfb230f7}</Project>
-      <Name>Homework6.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Homework6.IService\Homework6.IService.csproj">
-      <Project>{d677e5c3-9196-4ddf-9e88-34dd73824c71}</Project>
-      <Name>Homework6.IService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Homework6.Model\Homework6.Model.csproj">
-      <Project>{be89bc4a-26ec-4648-951c-f21b9b3fc835}</Project>
-      <Name>Homework6.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

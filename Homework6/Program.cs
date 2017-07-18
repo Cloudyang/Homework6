@@ -12,10 +12,10 @@ namespace Homework6
     {
         static void Main(string[] args)
         {
-            //var webclient = new WebClientDemo("http://www.veken.com");
+            //var webclient = new WebClientDemo("https://www.baidu.com");
             //var html = webclient.GetHtml();
             //Console.WriteLine(html);
-            var webhelper = new MyWebHelper("http://www.veken.com");
+            var webhelper = new MyWebHelper("https://www.baidu.com");
             var html = webhelper.GetHtml();
             Console.WriteLine(html);
 

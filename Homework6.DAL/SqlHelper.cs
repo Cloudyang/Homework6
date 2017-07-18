@@ -42,7 +42,7 @@ namespace Homework6.DAL
             }
         }
 
-        public int Add<T>(T t) where T : BaseModel
+        public int Add<T>(T t, string tableName = null) where T : BaseModel
         {
             int iResult = ExecuteAction(cmd =>
             {
@@ -63,7 +63,7 @@ namespace Homework6.DAL
                                      Value = p.GetValue(t) ?? DBNull.Value
                                  }).ToArray();
 
-                var sql = string.Format("insert into [{0}]({1}) values({2})", type.Name, fieldList, parameterList);
+                var sql = string.Format("insert into [{0}]({1}) values({2})", tableName ?? type.Name, fieldList, parameterList);
                 cmd.CommandText = sql;
                 cmd.Parameters.AddRange(pvList);
                 return cmd.ExecuteNonQuery();
@@ -73,7 +73,7 @@ namespace Homework6.DAL
         }
 
 
-        public int Update<T>(T t) where T : BaseModel
+        public int Update<T>(T t, string tableName = null) where T : BaseModel
         {
             int iResult = ExecuteAction(cmd =>
             {
@@ -90,7 +90,7 @@ namespace Homework6.DAL
                                      Value = p.GetValue(t) ?? DBNull.Value
                                  }).ToArray();
 
-                string sql = string.Format("update [{0}] set {1}  where id={2}", type.Name, fieldList, t.Id);
+                string sql = string.Format("update [{0}] set {1}  where id={2}", tableName ?? type.Name, fieldList, t.Id);
                 cmd.CommandText = sql;
                 cmd.Parameters.AddRange(pvList);
                 return cmd.ExecuteNonQuery();
@@ -100,12 +100,12 @@ namespace Homework6.DAL
         }
 
 
-        public int Delete<T>(int id) where T : BaseModel
+        public int Delete<T>(int id, string tableName = null) where T : BaseModel
         {
             int iResult = ExecuteAction(cmd =>
             {
                 Type type = typeof(T);
-                string sql = string.Format("delete from [{0}] where id={1}", typeof(T).Name, id);
+                string sql = string.Format("delete from [{0}] where id={1}", tableName ?? typeof(T).Name, id);
                 cmd.CommandText = sql;
                 return cmd.ExecuteNonQuery();
             });
@@ -113,14 +113,14 @@ namespace Homework6.DAL
             return iResult;
         }
 
-        public T GetById<T>(int id) where T : BaseModel
+        public T GetById<T>(int id, string tableName = null) where T : BaseModel
         {
             T t = ExecuteAction(cmd =>
             {
                 Type type = typeof(T);
                 string fieldList = string.Join(",", type.GetProperties().Select(s => string.Format("[{0}]", s.Name)));
                 string sql = string.Format(@"select {0} from [{1}] where id={2}",
-                                        fieldList, type.Name, id);
+                                        fieldList, tableName ?? type.Name, id);
                 var obj = Activator.CreateInstance<T>();
                 cmd.CommandText = sql;
                 SqlDataReader dr = cmd.ExecuteReader(System.Data.CommandBehavior.SingleRow);
@@ -145,7 +145,7 @@ namespace Homework6.DAL
                 string fieldList = string.Join(",",
                                              type.GetProperties()
                                                  .Select(p => string.Format("[{0}]", p.Name)));
-                string sql = string.Format("select {0} from [{1}] ", fieldList, type.Name);
+                string sql = string.Format("select {0} from [{1}] ", fieldList, tableName ?? type.Name);
                 if (sWhere != null)
                 {
                     sql += sWhere;
