@@ -15,7 +15,7 @@ namespace Homework6.Common.Utility
         /// <summary>
         /// 数据文件保存路径
         /// </summary>
-        public static string DataPath = ConfigurationManager.AppSettings["DataPath"];
+        public static string DataPath = ConfigurationManager.AppSettings["JDDataPath"];
         /// <summary>
         /// 京东类别入口
         /// </summary>
