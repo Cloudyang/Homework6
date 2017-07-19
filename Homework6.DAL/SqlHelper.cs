@@ -136,7 +136,7 @@ namespace Homework6.DAL
             return t;
         }
 
-        public List<T> GetALL<T>(string sWhere = null) where T : BaseModel
+        public List<T> GetALL<T>(string sWhere = null, string tableName = null) where T : BaseModel
         {
             return ExecuteAction(command =>
             {
@@ -175,36 +175,53 @@ namespace Homework6.DAL
 
         public int InsertList<T>(IEnumerable<T> ts, string tableName = null) where T : BaseModel
         {
-            int iResult = ExecuteAction(cmd =>
+            int iResult = 0;
+            Type type = typeof(T);
+            using (SqlConnection conn = new SqlConnection(sConn))
             {
-                Type type = typeof(T);
-                StringBuilder sbSql = new StringBuilder();
-                foreach (var t in ts)
+                conn.Open();
+                using (var trans = conn.BeginTransaction())
                 {
-                    string fieldList = string.Join(",", type.GetProperties()
-                                                        .Where(p => !p.Name.Equals("Id"))
-                                                        .Select(p => string.Format("[{0}]", p.Name)));
-                    //更新代码：将valueList 替换参数型 parameterList
-                    string parameterList = string.Join(",", type.GetProperties()
-                                                            .Where(p => !p.Name.Equals("Id"))
-                                                            .Select(p => string.Format("@{0}", p.Name)));
-                    //新增代码：带参数部分
-                    var pvList = type.GetProperties()
-                                     .Where(p => !p.Name.Equals("Id"))
-                                     .Select(p => new SqlParameter
-                                     {
-                                         ParameterName = string.Format("@{0}", p.Name),
-                                         Value = p.GetValue(t) ?? DBNull.Value
-                                     }).ToArray();
-
-                    cmd.Parameters.AddRange(pvList);
-                    var sql = string.Format("insert into [{0}]({1}) values({2});", tableName ?? type.Name, fieldList, parameterList);
-                    sbSql.Append(sql);
+                    try
+                    {
+                        foreach (var t in ts)
+                        {
+                            string fieldList = string.Join(",", type.GetProperties()
+                                                                .Where(p => !p.Name.Equals("Id"))
+                                                                .Select(p => string.Format("[{0}]", p.Name)));
+                            //更新代码：将valueList 替换参数型 parameterList
+                            string parameterList = string.Join(",", type.GetProperties()
+                                                                    .Where(p => !p.Name.Equals("Id"))
+                                                                    .Select(p => string.Format("@{0}", p.Name)));
+                            //新增代码：带参数部分
+                            var pvList = type.GetProperties()
+                                             .Where(p => !p.Name.Equals("Id"))
+                                             .Select(p => new SqlParameter
+                                             {
+                                                 ParameterName = string.Format("@{0}", p.Name),
+                                                 Value = p.GetValue(t) ?? DBNull.Value
+                                             }).ToArray();
+                            var sql = string.Format("insert into [{0}]({1}) values({2});", tableName ?? type.Name, fieldList, parameterList);
+                            using (var cmd = new SqlCommand(sql, conn, trans))
+                            {
+                                cmd.Parameters.AddRange(pvList);
+                                iResult += cmd.ExecuteNonQuery();
+                            }
+                        }
+                        trans.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        iResult = 0;
+                        trans.Rollback();
+                        throw ex;
+                    }
                 }
-
-                cmd.CommandText = sbSql.ToString();
-                return cmd.ExecuteNonQuery();
-            });
+                if (conn.State != System.Data.ConnectionState.Closed)
+                {
+                    conn.Close();
+                }
+            }
 
             return iResult;
         }

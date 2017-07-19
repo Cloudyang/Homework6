@@ -12,12 +12,13 @@ namespace Homework6.JD.Service
 {
     public class CategoryRepository //: IRepository<Commodity>
     {
+        private static readonly string tableName = "JD_Category";
         private Logger logger = new Logger(typeof(CategoryRepository));
-        private IDBHelper sqlHelper;
+        private static IDBHelper sqlHelper = new Homework6.DAL.SqlHelper();
 
         public void Save(List<Category> categoryList)
         {
-            sqlHelper.InsertList<Category>(categoryList, "Category");
+            sqlHelper.InsertList<Category>(categoryList, tableName);
             new Action<List<Category>>(SaveList).BeginInvoke(categoryList, null, null);
         }
 
@@ -28,9 +29,9 @@ namespace Homework6.JD.Service
         /// <returns></returns>
         public List<Category> QueryListByLevel(int level)
         {
-            string sql = string.Format("SELECT * FROM category WHERE categorylevel={0};", level);
+            // string sql = string.Format("SELECT * FROM category WHERE categorylevel={0};", level);
             //    return SqlHelper.QueryList<Category>(sql);
-            return sqlHelper.GetALL<Category>($"WHERE categorylevel={level}");
+            return sqlHelper.GetALL<Category>($"WHERE categorylevel={level}", tableName);
         }
 
 

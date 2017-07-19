@@ -52,7 +52,7 @@ namespace Homework6.JD.Service
                         try
                         {
                             List<Commodity> commodityList = GetCommodityList(category, pageUrl.Replace("&page=1&", string.Format("&page={0}&", i)));
-                            //commodityRepository.SaveList(commodityList);
+                            commodityRepository.SaveList(commodityList);
                         }
                         catch (Exception ex)//保证一页的错误不影响另外一页
                         {

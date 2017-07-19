@@ -28,12 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.btnJDCrawler = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // btnJDCrawler
+            // 
+            this.btnJDCrawler.Location = new System.Drawing.Point(37, 55);
+            this.btnJDCrawler.Name = "btnJDCrawler";
+            this.btnJDCrawler.Size = new System.Drawing.Size(93, 23);
+            this.btnJDCrawler.TabIndex = 0;
+            this.btnJDCrawler.Text = "京东测试采集";
+            this.btnJDCrawler.UseVisualStyleBackColor = true;
+            this.btnJDCrawler.Click += new System.EventHandler(this.btnJDCrawler_Click);
+            // 
+            // FrmMain
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.btnJDCrawler);
+            this.Name = "FrmMain";
             this.Text = "Form1";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btnJDCrawler;
     }
 }
 

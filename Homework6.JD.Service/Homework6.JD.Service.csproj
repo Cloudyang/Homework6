@@ -55,6 +55,10 @@
       <Project>{19ed0547-cb5c-46e8-8f73-ec01cfb230f7}</Project>
       <Name>Homework6.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Homework6.DAL\Homework6.DAL.csproj">
+      <Project>{9d142a06-71ce-4bc2-8bca-fc662631d4f9}</Project>
+      <Name>Homework6.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Homework6.IDAL\Homework6.IDAL.csproj">
       <Project>{c9a2dc47-aa65-4910-a64b-ce4107906341}</Project>
       <Name>Homework6.IDAL</Name>

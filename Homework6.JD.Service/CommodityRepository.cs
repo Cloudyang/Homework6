@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using Homework6.Model.JD;
 using Homework6.Common.Utility;
 using Homework6.IDAL;
+using Homework6.DAL;
 
 namespace Homework6.JD.Service
 {
     public class CommodityRepository //: IRepository<Commodity>
     {
         private Logger logger = new Logger(typeof(CommodityRepository));
-        private static IDBHelper sqlHelper;
+        private static IDBHelper sqlHelper = new SqlHelper();
 
         public void SaveList(List<Commodity> commodityList)
         {

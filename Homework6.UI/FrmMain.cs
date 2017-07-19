@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Homework6.Common.Utility;
+using Homework6.Crawler.JD;
+using Homework6.IService;
+using Homework6.JD.Service;
+using Homework6.Model.JD;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,16 +23,28 @@ namespace Homework6.UI
             InitializeComponent();
         }
 
-        public void Init()
+        private void btnJDCrawler_Click(object sender, EventArgs e)
         {
-            DataSet dset = new DataSet();
-            string sql = string.Empty;
+            //#region 测试DownloadHtml
+            //string html = HttpHelper.DownloadHtml(@"https://list.jd.com/list.html?cat=9987,653,655", Encoding.UTF8);
+            //#endregion
 
-            string conn = null;
-            SqlDataAdapter da1 = new SqlDataAdapter();
-            da1.SelectCommand.Connection = new SqlConnection(conn);
-            da1.SelectCommand.CommandText = sql;
-            da1.Fill(dset);
+            //#region 测试获取分类页
+            ////string html1 = HttpHelper.DownloadHtml(Constant.JDCategoryUrl, Encoding.UTF8);
+            //#endregion
+
+
+            //#region 测试抓取商品列表
+            //string testCategory = "{\"Id\":73,\"Code\":\"02f01s01T\",\"ParentCode\":\"02f01s\",\"Name\":\"烟机/灶具\",\"Url\":\"http://list.jd.com/list.html?cat=737,13297,1300\",\"Level\":3}";
+            //Category category = JsonHelper.JsonToObj<Category>(testCategory);
+            //ISearch search = new CommoditySearch(category);
+            //search.Crawler();
+            //#endregion
+
+            #region 抓取
+            CrawlerCenter.Handler();
+            #endregion
+
         }
     }
 }

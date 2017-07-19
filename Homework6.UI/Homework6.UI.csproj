@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F472AE4C-25EE-48D8-83BA-2FB353A9EE90}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Homework6.UI</RootNamespace>
     <AssemblyName>Homework6.UI</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crawler.JD\CrawlerCenter.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,6 +57,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -80,9 +87,21 @@
       <Project>{19ed0547-cb5c-46e8-8f73-ec01cfb230f7}</Project>
       <Name>Homework6.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Homework6.DAL\Homework6.DAL.csproj">
+      <Project>{9d142a06-71ce-4bc2-8bca-fc662631d4f9}</Project>
+      <Name>Homework6.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Homework6.IDAL\Homework6.IDAL.csproj">
+      <Project>{c9a2dc47-aa65-4910-a64b-ce4107906341}</Project>
+      <Name>Homework6.IDAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Homework6.IService\Homework6.IService.csproj">
       <Project>{d677e5c3-9196-4ddf-9e88-34dd73824c71}</Project>
       <Name>Homework6.IService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Homework6.JD.Service\Homework6.JD.Service.csproj">
+      <Project>{5efd547e-d4c7-4ed9-96b3-b3e7682f86f8}</Project>
+      <Name>Homework6.JD.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\Homework6.Model\Homework6.Model.csproj">
       <Project>{be89bc4a-26ec-4648-951c-f21b9b3fc835}</Project>

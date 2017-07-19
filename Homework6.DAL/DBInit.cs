@@ -40,7 +40,7 @@ namespace Homework6.DAL
                 else
                 {
                     logger.Error("初始化数据库InitCommodityTable失败", ex);
-                    throw ex;
+                    //throw ex;
                 }
             }
             #endregion Delete
@@ -96,7 +96,7 @@ namespace Homework6.DAL
                 else
                 {
                     logger.Error("初始化数据库InitCategoryTable失败", ex);
-                    throw ex;
+                   // throw ex;
                 }
             }
             #endregion Delete
