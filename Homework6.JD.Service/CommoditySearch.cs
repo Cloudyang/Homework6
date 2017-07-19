@@ -220,7 +220,7 @@ namespace Homework6.JD.Service
                 }
                 html = html.Substring(html.IndexOf("(") + 1);
                 html = html.Substring(0, html.LastIndexOf(")"));
-                List<CommodityPrice> priceList = JsonConvert.DeserializeObject<List<CommodityPrice>>(html);
+                List<CommodityPrice> priceList = JsonHelper.JsonToObj<List<CommodityPrice>>(html);
                 commodityList.ForEach(c => c.Price = priceList.FirstOrDefault(p => p.id.Equals(string.Format("J_{0}", c.ProductId))).p);
                 //commodityList.ForEach(c => Console.WriteLine(" Title={0}  ImageUrl={1} Url={2} Price={3} Id={4}", c.Title, c.ImageUrl, c.Url, c.Price, c.Id));
             }

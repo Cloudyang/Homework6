@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Homework6.Common.Utility;
 using Homework6.IDAL;
 using Homework6.Model.JD;
-using Homework6.IDAL;
 
 namespace Homework6.JD.Service
 {
@@ -18,9 +17,8 @@ namespace Homework6.JD.Service
 
         public void Save(List<Category> categoryList)
         {
-            //SqlHelper.InsertList<Category>(categoryList, "Category");
-            //new Action<List<Category>>(SaveList).BeginInvoke(categoryList, null, null);
-            //sqlHelper.
+            sqlHelper.InsertList<Category>(categoryList, "Category");
+            new Action<List<Category>>(SaveList).BeginInvoke(categoryList, null, null);
         }
 
         /// <summary>

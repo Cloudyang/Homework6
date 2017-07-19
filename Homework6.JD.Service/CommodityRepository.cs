@@ -22,7 +22,7 @@ namespace Homework6.JD.Service
 
             foreach (var data in group)
             {
-              //     SqlHelper.InsertList<Commodity>(data.ToList(), data.Key);
+                sqlHelper.InsertList<Commodity>(data.ToList(), data.Key);
             }
         }
 

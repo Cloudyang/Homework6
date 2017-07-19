@@ -1,15 +1,14 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Ruanmou.Crawler.Model;
-using Ruanmou.Crawler.Utility;
+using Homework6.Model.JD;
+using Homework6.Common.Utility;
 
-namespace Ruanmou.Crawler.DataService
+namespace Homework6.JD.Service
 {
     public class WarnRepository //: IRepository<Commodity>
     {
@@ -31,7 +30,7 @@ namespace Ruanmou.Crawler.DataService
                     sw = File.AppendText(totolPath);
                 }
                 sw.WriteLine(msg);
-                sw.WriteLine(JsonConvert.SerializeObject(JsonConvert.SerializeObject(category)));
+                sw.WriteLine(JsonHelper.ObjToString(category));
             }
             catch (Exception e)
             {

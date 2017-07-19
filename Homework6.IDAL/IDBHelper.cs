@@ -7,6 +7,7 @@ namespace Homework6.IDAL
     {
         int ExecuteNonQuery(string sql);
         int Add<T>(T t, string tableName = null) where T : BaseModel;
+        int InsertList<T>(IEnumerable<T> ts, string tableName = null) where T : BaseModel;
         int Delete<T>(int id, string tableName = null) where T : BaseModel;
         List<T> GetALL<T>(string sWhere = null) where T : BaseModel;
         T GetById<T>(int id, string tableName = null) where T : BaseModel;
