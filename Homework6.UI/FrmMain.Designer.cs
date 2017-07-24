@@ -33,7 +33,7 @@
             // 
             // btnJDCrawler
             // 
-            this.btnJDCrawler.Location = new System.Drawing.Point(37, 55);
+            this.btnJDCrawler.Location = new System.Drawing.Point(23, 12);
             this.btnJDCrawler.Name = "btnJDCrawler";
             this.btnJDCrawler.Size = new System.Drawing.Size(93, 23);
             this.btnJDCrawler.TabIndex = 0;

@@ -19,7 +19,11 @@ namespace Homework6.JD.Service
         public void Save(List<Category> categoryList)
         {
             sqlHelper.InsertList<Category>(categoryList, tableName);
-            new Action<List<Category>>(SaveList).BeginInvoke(categoryList, null, null);
+            Task.Run(() =>
+            {
+                SaveList(categoryList);
+            });
+        //    new Action<List<Category>>(SaveList).BeginInvoke(categoryList, null, null);
         }
 
         /// <summary>

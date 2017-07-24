@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homework6", "Homework6\Home
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Task", "Solution Task", "{BAC9A420-5BF5-4D1D-8C16-0389BB71D05A}"
 	ProjectSection(SolutionItems) = preProject
+		Advanced9第七次homework.txt = Advanced9第七次homework.txt
 		Advanced9第六次homework.txt = Advanced9第六次homework.txt
 		说明文档.txt = 说明文档.txt
 	EndProjectSection
