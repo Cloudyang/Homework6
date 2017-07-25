@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homework6", "Homework6\Homework6.csproj", "{FBC98CF3-B79C-4B82-8272-AEA6449A71D4}"
 EndProject
@@ -27,6 +27,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homework6.UI", "Homework6.UI\Homework6.UI.csproj", "{F472AE4C-25EE-48D8-83BA-2FB353A9EE90}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homework6.Unity", "Homework6.Unity\Homework6.Unity.csproj", "{F259FD92-1584-4A7B-B224-F7F1E23C1FD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homework6.Lucene.Service", "Homework6.Lucene.Service\Homework6.Lucene.Service.csproj", "{CF0FDED7-314B-4F32-8CC2-6701D5E2A8A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +72,10 @@ Global
 		{F259FD92-1584-4A7B-B224-F7F1E23C1FD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F259FD92-1584-4A7B-B224-F7F1E23C1FD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F259FD92-1584-4A7B-B224-F7F1E23C1FD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF0FDED7-314B-4F32-8CC2-6701D5E2A8A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF0FDED7-314B-4F32-8CC2-6701D5E2A8A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF0FDED7-314B-4F32-8CC2-6701D5E2A8A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF0FDED7-314B-4F32-8CC2-6701D5E2A8A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

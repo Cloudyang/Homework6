@@ -1,6 +1,6 @@
 ﻿using Homework6.Common.Utility;
 using Homework6.Crawler.JD;
-using Homework6.IService;
+using Homework6.IServiceCrawler;
 using Homework6.JD.Service;
 using Homework6.Model.JD;
 using System;
@@ -46,7 +46,7 @@ namespace Homework6.UI
             #region 抓取
             Task.Run(() =>
             {
-                CrawlerCenter.Handler();
+                CrawlerCenter.Handler(dgvCrawler_Update);
             }).ContinueWith(t =>
             {
                 base.Invoke(new Action(() =>
@@ -61,6 +61,14 @@ namespace Homework6.UI
             ((Button)sender).Enabled = false;
             btnResume.Enabled = false;
             btnCleanData.Enabled = false;
+        }
+
+        private void dgvCrawler_Update(List<Category> obj)
+        {
+            Invoke(new Action(()=> {
+                dgvCrawler.DataSource = obj;
+                dgvCrawler.Update();
+            }));
         }
 
         private void btnResume_Click(object sender, EventArgs e)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Homework6.IService
+namespace Homework6.IService.Crawler
 {
     public interface IRepository<T> where T : class//, new()
     {

@@ -1,7 +1,7 @@
 ﻿using Homework6.Common.Utility;
 using Homework6.DAL;
 using Homework6.IDAL;
-using Homework6.IService;
+using Homework6.IServiceCrawler;
 using Homework6.JD.Service;
 using Homework6.Model.JD;
 using System;
@@ -21,14 +21,14 @@ namespace Homework6.Crawler.JD
         /// <summary>
         /// 抓取
         /// </summary>
-        public static void Handler()
+        public static void Handler(Action<List<Category>> action=null)
         {
           //  Console.WriteLine("请输入Y/N进行类别表初始化确认！ Y 删除Category表然后重新创建，然后抓取类型数据，N（或者其他）跳过");
             //string input = Console.ReadLine();
             //if (input.Equals("Y", StringComparison.OrdinalIgnoreCase))
             {
                 DBInit.InitCategoryTable(sourcename);
-                CrawlerCategory();
+                CrawlerCategory(action);
             }
             //else
             //{
@@ -48,10 +48,10 @@ namespace Homework6.Crawler.JD
             Console.WriteLine("*****************^_^**********************");
         }
 
-        private static void CrawlerCategory()
+        private static void CrawlerCategory(Action<List<Category>> action = null)
         {
             Console.WriteLine($"{ DateTime.Now} jd商品类别开始抓取 - -");
-            ISearch search = new CategorySearch();
+            ISearch search = new CategorySearch(action);
             search.Crawler();
         }
 

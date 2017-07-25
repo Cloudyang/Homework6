@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Homework6.Common.Utility;
 
 using Homework6.Model.JD;
-using Homework6.IService;
+using Homework6.IService.Crawler;
 
 namespace Homework6.JD.Service
 {
@@ -20,6 +20,14 @@ namespace Homework6.JD.Service
     {
         private static Logger logger = new Logger(typeof(CategorySearch));
         private int _Count = 1;//每次都得new一个 重新初始化类别
+
+        private Action<List<Category>> _action;
+        public CategorySearch()
+        {     }
+        public CategorySearch(Action<List<Category>> action)
+        {
+            this._action = action;
+        }
 
         public void Crawler()
         {
@@ -44,6 +52,8 @@ namespace Homework6.JD.Service
 
                     categoryList.AddRange(this.First(node.InnerHtml, k++.ToString("00") + "f", "root"));
                 }
+                ///新增代码用于更新dgvCrawler数据视图框
+                _action?.Invoke(categoryList);
 
                 CategoryRepository categoryRepository = new CategoryRepository();
                 categoryRepository.Save(categoryList);

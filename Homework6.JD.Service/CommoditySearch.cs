@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Homework6.Common.Utility;
-using Homework6.IService;
+using Homework6.IService.Crawler;
 using Homework6.Model.JD;
 
 namespace Homework6.JD.Service

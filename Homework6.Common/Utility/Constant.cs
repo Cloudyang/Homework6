@@ -22,6 +22,11 @@ namespace Homework6.Common.Utility
         public static string JDCategoryUrl = ConfigurationManager.AppSettings["JDCategoryUrl"];
 
         /// <summary>
+        /// Lucene文档存放路径
+        /// </summary>
+        public static string IndexPath = ConfigurationManager.AppSettings["IndexPath"];
+
+        /// <summary>
         /// 多线程控制信号量 默认开启
         /// </summary>
         public static System.Threading.ManualResetEvent MRE = new System.Threading.ManualResetEvent(true);
