@@ -53,13 +53,14 @@ namespace Homework6.UI
                 {
                     ((Button)sender).Enabled = true;
                     btnStop.Enabled = true;
-                    Constant.CTS = null; //清空原有信号量
+                    btnCleanData.Enabled = true;
                 }));
             }
             );
             #endregion
             ((Button)sender).Enabled = false;
             btnResume.Enabled = false;
+            btnCleanData.Enabled = false;
         }
 
         private void btnResume_Click(object sender, EventArgs e)
@@ -81,6 +82,21 @@ namespace Homework6.UI
             Constant.CTS.Cancel();
 
             ((Button)sender).Enabled = false;
+        }
+
+        private void btnCleanData_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                CrawlerCenter.CleanAll();
+            }).ContinueWith(t =>
+            {
+                Invoke(new Action(() =>
+                {
+                    btnJDCrawler.Enabled = true;
+                }));
+            });
+            btnCleanData.Enabled = false;
         }
     }
 }

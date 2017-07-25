@@ -34,11 +34,11 @@ namespace Homework6.Crawler.JD
             //{
             //    Console.WriteLine("你选择不初始化类别数据");
             //}
-            Console.WriteLine("*****************^_^**********************");
+            //Console.WriteLine("*****************^_^**********************");
 
 
-
-            Console.WriteLine("请输入Y/N进行商品数据初始化确认！ Y 删除全部商品表表然后重新创建，然后抓取商品数据，N（或者其他）跳过");
+            
+           // Console.WriteLine("请输入Y/N进行商品数据初始化确认！ Y 删除全部商品表表然后重新创建，然后抓取商品数据，N（或者其他）跳过");
             //input = Console.ReadLine();
             //if (input.Equals("Y", StringComparison.OrdinalIgnoreCase))
             {
@@ -86,13 +86,12 @@ namespace Homework6.Crawler.JD
             }
             Task.WaitAll(taskList.ToArray());
             Console.WriteLine($"{ DateTime.Now} jd商品抓取全部完成 - -");
-            CleanAll();
         }
 
         /// <summary>
         /// 清理重复数据
         /// </summary>
-        private static void CleanAll()
+        public static void CleanAll()
         {
             try
             {

@@ -32,6 +32,7 @@
             this.btnResume = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
+            this.btnCleanData = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnJDCrawler
@@ -74,11 +75,22 @@
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
+            // btnCleanData
+            // 
+            this.btnCleanData.Location = new System.Drawing.Point(297, 215);
+            this.btnCleanData.Name = "btnCleanData";
+            this.btnCleanData.Size = new System.Drawing.Size(75, 23);
+            this.btnCleanData.TabIndex = 4;
+            this.btnCleanData.Text = "清除数据";
+            this.btnCleanData.UseVisualStyleBackColor = true;
+            this.btnCleanData.Click += new System.EventHandler(this.btnCleanData_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(405, 261);
+            this.Controls.Add(this.btnCleanData);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnPause);
             this.Controls.Add(this.btnResume);
@@ -95,6 +107,7 @@
         private System.Windows.Forms.Button btnResume;
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button btnCleanData;
     }
 }
 
