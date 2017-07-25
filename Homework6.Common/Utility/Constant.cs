@@ -20,5 +20,16 @@ namespace Homework6.Common.Utility
         /// 京东类别入口
         /// </summary>
         public static string JDCategoryUrl = ConfigurationManager.AppSettings["JDCategoryUrl"];
+
+        /// <summary>
+        /// 多线程控制信号量 默认开启
+        /// </summary>
+        public static System.Threading.ManualResetEvent MRE = new System.Threading.ManualResetEvent(true);
+
+        /// <summary>
+        /// 多线程公有信号量
+        /// </summary>
+        public static System.Threading.CancellationTokenSource CTS;  //在主线程调用时 btnJDCrawler_Click 初始化
+
     }
 }

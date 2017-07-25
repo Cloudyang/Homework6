@@ -48,6 +48,13 @@ namespace Homework6.JD.Service
                     string sNumber = pageNumberNode.InnerText;
                     for (int i = 1; i < int.Parse(sNumber) + 1; i++)
                     {
+                        ///增加控制信号量
+                        Constant.MRE.WaitOne();
+                        if (Constant.CTS.IsCancellationRequested)
+                        {
+                            break;
+                        }
+
                         string pageUrl = string.Format("{0}&page={1}", category.Url, i);
                         try
                         {
@@ -102,6 +109,7 @@ namespace Homework6.JD.Service
             }
             catch (Exception ex)
             {
+                Constant.CTS.Cancel();
                 logger.Error("CrawlerMuti出现异常", ex);
                 warnRepository.SaveWarn(category, string.Format("出现异常,Name={0} Level={1} Url={2}", category.Name, category.CategoryLevel, category.Url));
             }

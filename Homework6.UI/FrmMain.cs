@@ -40,11 +40,47 @@ namespace Homework6.UI
             //ISearch search = new CommoditySearch(category);
             //search.Crawler();
             //#endregion
+            ///初始化信号量
+            Constant.CTS = new System.Threading.CancellationTokenSource();
 
             #region 抓取
-            CrawlerCenter.Handler();
+            Task.Run(() =>
+            {
+                CrawlerCenter.Handler();
+            }).ContinueWith(t =>
+            {
+                base.Invoke(new Action(() =>
+                {
+                    ((Button)sender).Enabled = true;
+                    btnStop.Enabled = true;
+                    Constant.CTS = null; //清空原有信号量
+                }));
+            }
+            );
             #endregion
+            ((Button)sender).Enabled = false;
+            btnResume.Enabled = false;
+        }
 
+        private void btnResume_Click(object sender, EventArgs e)
+        {
+            Constant.MRE.Set();
+            btnResume.Enabled = false;
+            btnPause.Enabled = true;
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            Constant.MRE.Reset();
+            btnResume.Enabled = true;
+            btnPause.Enabled = false;
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            Constant.CTS.Cancel();
+
+            ((Button)sender).Enabled = false;
         }
     }
 }

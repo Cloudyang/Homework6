@@ -6,8 +6,11 @@ Homework6控制台程序是自行尝试了多种方法实现对baidu网站首页抓取html
 改进方案，想引入Unity框架面向AOP编程踢除之前如日志处理。
 
 第6期任务需要完成如下：
-1、增加多线程实现商品数据抓取的开始、暂停、恢复等功能
-2、某个抓取出异常了，能够取消其他线程任务
+1、增加多线程实现商品数据抓取的开始、暂停、恢复等功能 （已完成）
+解决方法：在Constant公用类中增设ManualResetEvent MRE 在CategorySearch、CommoditySearch类Crawler方法循环体内增加Constant.MRE.WaitOne();
+2、某个抓取出异常了，能够取消其他线程任务 
+解决方法：在Constant公用类中增设CancellationTokenSource CTS 在btnStop_Click调用Constant.CTS.Cancel();  
+		  在CategorySearch、CommoditySearch类Crawler方法及CrawlerCenter类CrawlerCommodity方法循环体内增加Constant.CTS.IsCancellationRequested
 
 额外展示任务：
 1、UI增加DataGridView控件用来显示已采集列表目录条数 （后期扩展） 

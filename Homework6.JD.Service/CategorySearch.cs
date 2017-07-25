@@ -35,6 +35,13 @@ namespace Homework6.JD.Service
                 int k = 1;
                 foreach (HtmlNode node in nodeList)
                 {
+                    ///增加控制信号量
+                    Constant.MRE.WaitOne();
+                    if (Constant.CTS.IsCancellationRequested)
+                    {
+                        break;
+                    }
+
                     categoryList.AddRange(this.First(node.InnerHtml, k++.ToString("00") + "f", "root"));
                 }
 
@@ -43,6 +50,7 @@ namespace Homework6.JD.Service
             }
             catch (Exception ex)
             {
+                Constant.CTS.Cancel();
                 logger.Error("CrawlerMuti出现异常", ex);
             }
             finally

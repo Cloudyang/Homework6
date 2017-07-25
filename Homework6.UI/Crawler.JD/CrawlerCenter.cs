@@ -68,6 +68,13 @@ namespace Homework6.Crawler.JD
             TaskFactory taskFactory = new TaskFactory();
             foreach (Category category in categoryList)
             {
+                ///增加控制信号量
+                Constant.MRE.WaitOne();
+                if (Constant.CTS.IsCancellationRequested)
+                {
+                    return;
+                }
+
                 ISearch searcher = new CommoditySearch(category);
                 //searcher.Crawler();
                 taskList.Add(taskFactory.StartNew(searcher.Crawler));

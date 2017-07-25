@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.btnJDCrawler = new System.Windows.Forms.Button();
+            this.btnResume = new System.Windows.Forms.Button();
+            this.btnPause = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnJDCrawler
@@ -41,11 +44,44 @@
             this.btnJDCrawler.UseVisualStyleBackColor = true;
             this.btnJDCrawler.Click += new System.EventHandler(this.btnJDCrawler_Click);
             // 
+            // btnResume
+            // 
+            this.btnResume.Location = new System.Drawing.Point(122, 12);
+            this.btnResume.Name = "btnResume";
+            this.btnResume.Size = new System.Drawing.Size(75, 23);
+            this.btnResume.TabIndex = 1;
+            this.btnResume.Text = "继续";
+            this.btnResume.UseVisualStyleBackColor = true;
+            this.btnResume.Click += new System.EventHandler(this.btnResume_Click);
+            // 
+            // btnPause
+            // 
+            this.btnPause.Location = new System.Drawing.Point(203, 12);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(75, 23);
+            this.btnPause.TabIndex = 2;
+            this.btnPause.Text = "暂停";
+            this.btnPause.UseVisualStyleBackColor = true;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(297, 11);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.TabIndex = 3;
+            this.btnStop.Text = "停止";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(405, 261);
+            this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnPause);
+            this.Controls.Add(this.btnResume);
             this.Controls.Add(this.btnJDCrawler);
             this.Name = "FrmMain";
             this.Text = "Form1";
@@ -56,6 +92,9 @@
         #endregion
 
         private System.Windows.Forms.Button btnJDCrawler;
+        private System.Windows.Forms.Button btnResume;
+        private System.Windows.Forms.Button btnPause;
+        private System.Windows.Forms.Button btnStop;
     }
 }
 
