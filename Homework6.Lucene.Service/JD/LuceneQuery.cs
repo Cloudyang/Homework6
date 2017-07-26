@@ -10,7 +10,7 @@ using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
-using Lucene.Net.Util;
+using LuceneUtil=Lucene.Net.Util;
 using Lucene.Net.Store;
 using PanGu;
 using Homework6.IService.Lucene;
@@ -42,7 +42,7 @@ namespace Homework6.Lucene.Service.JD
                 Analyzer analyzer = new PanGuAnalyzer();
 
                 //--------------------------------------这里配置搜索条件
-                QueryParser parser = new QueryParser(Version.LUCENE_30, "title", analyzer);
+                QueryParser parser = new QueryParser(LuceneUtil.Version.LUCENE_30, "title", analyzer);
                 Query query = parser.Parse(queryString);
                 Console.WriteLine(query.ToString()); //显示搜索表达式
                 TopDocs docs = searcher.Search(query, (Filter)null, 10000);
@@ -86,7 +86,7 @@ namespace Homework6.Lucene.Service.JD
                 Analyzer analyzer = new PanGuAnalyzer();
 
                 //--------------------------------------这里配置搜索条件
-                QueryParser parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "title", analyzer);
+                QueryParser parser = new QueryParser(LuceneUtil.Version.LUCENE_30, "title", analyzer);
                 Query query = parser.Parse(queryString);
                 
                 pageIndex = Math.Max(1, pageIndex);//索引从1开始

@@ -13,7 +13,7 @@ using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
-using Lucene.Net.Util;
+using LuceneUtil = Lucene.Net.Util;
 using LuceneIO = Lucene.Net.Store;
 
 namespace Homework6.Lucene.Service.JD
@@ -64,7 +64,7 @@ namespace Homework6.Lucene.Service.JD
                 if (writer != null)
                 {
                     //writer.Optimize(); 创建索引的时候不做合并  merge的时候处理
-                    writer.Close();
+                    writer.Dispose();
                 }
             }
         }
@@ -80,7 +80,7 @@ namespace Homework6.Lucene.Service.JD
             try
             {
                 if (childDirs == null || childDirs.Length == 0) return;
-                Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_30);
+                Analyzer analyzer = new StandardAnalyzer(LuceneUtil.Version.LUCENE_30);
                 string rootPath = Constant.IndexPath;
                 DirectoryInfo dirInfo = Directory.CreateDirectory(rootPath);
                 LuceneIO.Directory directory = LuceneIO.FSDirectory.Open(dirInfo);
@@ -148,7 +148,7 @@ namespace Homework6.Lucene.Service.JD
                 {
                     //if (fileNum > 50)
                     //    writer.Optimize();
-                    writer.Close();
+                    writer.Dispose();
                 }
             }
         }
@@ -172,7 +172,7 @@ namespace Homework6.Lucene.Service.JD
             try
             {
                 if (ciList == null || ciList.Count == 0) return;
-                Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
+                Analyzer analyzer = new StandardAnalyzer(LuceneUtil.Version.LUCENE_30);
                 string rootIndexPath = Constant.IndexPath;
                 DirectoryInfo dirInfo = Directory.CreateDirectory(rootIndexPath);
                 LuceneIO.Directory directory = LuceneIO.FSDirectory.Open(dirInfo);
@@ -206,7 +206,7 @@ namespace Homework6.Lucene.Service.JD
             try
             {
                 if (ci == null) return;
-                Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
+                Analyzer analyzer = new StandardAnalyzer(LuceneUtil.Version.LUCENE_30);
                 string rootIndexPath = Constant.IndexPath;
                 DirectoryInfo dirInfo = Directory.CreateDirectory(rootIndexPath);
                 LuceneIO.Directory directory = LuceneIO.FSDirectory.Open(dirInfo);
@@ -268,7 +268,7 @@ namespace Homework6.Lucene.Service.JD
                 {
                     //if (fileNum > 50)
                     //    writer.Optimize();
-                    writer.Close();
+                    writer.Dispose();
                 }
             }
         }
@@ -321,11 +321,11 @@ namespace Homework6.Lucene.Service.JD
         /// <returns></returns>
         private PerFieldAnalyzerWrapper CreateAnalyzerWrapper()
         {
-            Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
+            Analyzer analyzer = new StandardAnalyzer(LuceneUtil.Version.LUCENE_30);
 
             PerFieldAnalyzerWrapper analyzerWrapper = new PerFieldAnalyzerWrapper(analyzer);
             analyzerWrapper.AddAnalyzer("title", new PanGuAnalyzer());
-            analyzerWrapper.AddAnalyzer("categoryid", new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30));
+            analyzerWrapper.AddAnalyzer("categoryid", new StandardAnalyzer(LuceneUtil.Version.LUCENE_30));
             return analyzerWrapper;
         }
 

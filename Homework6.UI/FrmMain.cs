@@ -1,6 +1,6 @@
 ﻿using Homework6.Common.Utility;
 using Homework6.Crawler.JD;
-using Homework6.IServiceCrawler;
+using Homework6.IService.Crawler;
 using Homework6.JD.Service;
 using Homework6.Model.JD;
 using System;

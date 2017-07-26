@@ -7,7 +7,7 @@ using Lucene.Net.Analysis;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
-using Lucene.Net.Util;
+using LuceneUtil=Lucene.Net.Util;
 using Homework6.Common.Utility;
 
 namespace Homework6.Lucene.Service.JD
@@ -25,7 +25,7 @@ namespace Homework6.Lucene.Service.JD
         public string[] AnalyzerKey(string keyword)
         {
             Analyzer analyzer = new PanGuAnalyzer();
-            QueryParser parser = new QueryParser(Version.LUCENE_30, "title", analyzer);
+            QueryParser parser = new QueryParser(LuceneUtil.Version.LUCENE_30, "title", analyzer);
             Query query = parser.Parse(this.CleanKeyword(keyword));
             if (query is TermQuery)
             {
