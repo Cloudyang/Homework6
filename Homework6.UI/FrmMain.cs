@@ -76,6 +76,7 @@ namespace Homework6.UI
             Constant.MRE.Set();
             btnResume.Enabled = false;
             btnPause.Enabled = true;
+            btnStop.Enabled = true;
         }
 
         private void btnPause_Click(object sender, EventArgs e)
@@ -83,6 +84,7 @@ namespace Homework6.UI
             Constant.MRE.Reset();
             btnResume.Enabled = true;
             btnPause.Enabled = false;
+            btnStop.Enabled = false;
         }
 
         private void btnStop_Click(object sender, EventArgs e)
