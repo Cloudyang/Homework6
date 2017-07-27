@@ -15,7 +15,7 @@ namespace Homework6.Lucene.JD
     public class IndexBuilderPerThread
     {
         private Logger logger = new Logger(typeof(IndexBuilderPerThread));
-        private int CurrentThreadNum = 0;
+        private int CurrentThreadNum = 1;
         private string PathSuffix = "";
         private CancellationTokenSource CTS = null;
         public IndexBuilderPerThread(int threadNum, string pathSuffix, CancellationTokenSource cts)

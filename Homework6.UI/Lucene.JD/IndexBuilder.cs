@@ -26,7 +26,7 @@ namespace Homework6.Lucene.JD
                 logger.Debug(string.Format("{0} BuildIndex开始",DateTime.Now));
                 for (int i = 0; i < 31; i++)
                 {
-                    IndexBuilderPerThread thread = new IndexBuilderPerThread(i, i.ToString("000"), CTS);
+                    IndexBuilderPerThread thread = new IndexBuilderPerThread(i+1, i.ToString("000"), CTS);
                     thread.Process();
                 }
 
@@ -51,6 +51,7 @@ namespace Homework6.Lucene.JD
             finally
             {
                 logger.Debug(string.Format("{0} BuildIndex结束", DateTime.Now));
+                CTS = null;
             }
         }
 
