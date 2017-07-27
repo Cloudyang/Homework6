@@ -3,6 +3,8 @@ using Homework6.Crawler.JD;
 using Homework6.IService.Crawler;
 using Homework6.JD.Service;
 using Homework6.Model.JD;
+using Homework6.Lucene.JD;
+using Homework6.Lucene.Service.JD;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -107,6 +109,26 @@ namespace Homework6.UI
                 }));
             });
             btnCleanData.Enabled = false;
+        }
+
+        private void btnLuceneIndex_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                IndexBuilder.Build();
+            });
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            Task.Run(()=> {
+                var commodityList = CommodityLucene.QueryCommodity(txtKeyword.Text);
+                Invoke(new Action(() =>
+                {
+                    dgvLucene.DataSource = commodityList;
+                    dgvLucene.Update();
+                }));
+            });
         }
     }
 }

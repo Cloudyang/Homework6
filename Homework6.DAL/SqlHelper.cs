@@ -138,40 +138,55 @@ namespace Homework6.DAL
 
         public List<T> GetALL<T>(string sWhere = null, string tableName = null) where T : BaseModel
         {
-            return ExecuteAction(command =>
+            List<T> ts = new List<T>();
+            Type type = typeof(T);
+            string fieldList = string.Join(",",
+                                         type.GetProperties()
+                                             .Select(p => string.Format("[{0}]", p.Name)));
+            string sql = string.Format("select {0} from [{1}] ", fieldList, tableName ?? type.Name);
+            if (sWhere != null)
             {
-                List<T> ts = new List<T>();
-                Type type = typeof(T);
-                string fieldList = string.Join(",",
-                                             type.GetProperties()
-                                                 .Select(p => string.Format("[{0}]", p.Name)));
-                string sql = string.Format("select {0} from [{1}] ", fieldList, tableName ?? type.Name);
-                if (sWhere != null)
-                {
-                    sql += sWhere;
-                }
-                command.CommandText = sql;
-                SqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
-                {
-                    T t = Activator.CreateInstance<T>();
-                    foreach (var item in type.GetProperties())
-                    {
-                        //更新代码：解决System.ArgumentException:类型System.DBNull的对象无法转换为类型System.String。
-                        if (dr[item.Name] is DBNull)
-                        {
-                            item.SetValue(t, null);
-                        }
-                        else
-                        {
-                            item.SetValue(t, dr[item.Name]);
-                        }
-                    }
-                    ts.Add(t);
-                }
-                return ts;
-            });
+                sql += sWhere;
+            }
+            return QueryList<T>(sql);
         }
+
+        //    public List<T> GetALL<T>(string sWhere = null, string tableName = null) where T : BaseModel
+        //{
+        //    return ExecuteAction(command =>
+        //    {
+        //        List<T> ts = new List<T>();
+        //        Type type = typeof(T);
+        //        string fieldList = string.Join(",",
+        //                                     type.GetProperties()
+        //                                         .Select(p => string.Format("[{0}]", p.Name)));
+        //        string sql = string.Format("select {0} from [{1}] ", fieldList, tableName ?? type.Name);
+        //        if (sWhere != null)
+        //        {
+        //            sql += sWhere;
+        //        }
+        //        command.CommandText = sql;
+        //        SqlDataReader dr = command.ExecuteReader();
+        //        while (dr.Read())
+        //        {
+        //            T t = Activator.CreateInstance<T>();
+        //            foreach (var item in type.GetProperties())
+        //            {
+        //                //更新代码：解决System.ArgumentException:类型System.DBNull的对象无法转换为类型System.String。
+        //                if (dr[item.Name] is DBNull)
+        //                {
+        //                    item.SetValue(t, null);
+        //                }
+        //                else
+        //                {
+        //                    item.SetValue(t, dr[item.Name]);
+        //                }
+        //            }
+        //            ts.Add(t);
+        //        }
+        //        return ts;
+        //    });
+        //}
 
         public int InsertList<T>(IEnumerable<T> ts, string tableName = null) where T : BaseModel
         {
@@ -224,6 +239,35 @@ namespace Homework6.DAL
             }
 
             return iResult;
+        }
+
+        public List<T> QueryList<T>(string sql)
+        {
+            return ExecuteAction(command =>
+            {
+                List<T> ts = new List<T>();
+                Type type = typeof(T);
+                command.CommandText = sql;
+                SqlDataReader dr = command.ExecuteReader();
+                while (dr.Read())
+                {
+                    T t = Activator.CreateInstance<T>();
+                    foreach (var item in type.GetProperties())
+                    {
+                        //更新代码：解决System.ArgumentException:类型System.DBNull的对象无法转换为类型System.String。
+                        if (dr[item.Name] is DBNull)
+                        {
+                            item.SetValue(t, null);
+                        }
+                        else
+                        {
+                            item.SetValue(t, dr[item.Name]);
+                        }
+                    }
+                    ts.Add(t);
+                }
+                return ts;
+            });
         }
     }
 }

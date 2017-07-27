@@ -56,6 +56,9 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Lucene.JD\CommodityLucene.cs" />
+    <Compile Include="Lucene.JD\IndexBuilder.cs" />
+    <Compile Include="Lucene.JD\IndexBuilderPerThread.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmMain.resx">
@@ -103,6 +106,10 @@
     <ProjectReference Include="..\Homework6.JD.Service\Homework6.JD.Service.csproj">
       <Project>{5efd547e-d4c7-4ed9-96b3-b3e7682f86f8}</Project>
       <Name>Homework6.JD.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Homework6.Lucene.Service\Homework6.Lucene.Service.csproj">
+      <Project>{cf0fded7-314b-4f32-8cc2-6701d5e2a8a8}</Project>
+      <Name>Homework6.Lucene.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\Homework6.Model\Homework6.Model.csproj">
       <Project>{be89bc4a-26ec-4648-951c-f21b9b3fc835}</Project>

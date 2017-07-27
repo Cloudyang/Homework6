@@ -70,5 +70,18 @@ namespace Homework6.JD.Service
                 }
             }
         }
+
+        /// <summary>
+        /// 分页获取商品数据
+        /// </summary>
+        /// <param name="tableNum"></param>
+        /// <param name="pageIndex">从1开始</param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public List<Commodity> QueryList(int tableNum, int pageIndex, int pageSize)
+        {
+            string sql = string.Format("SELECT top {2} * FROM JD_Commodity_{0} WHERE id>{1};", tableNum.ToString("000"), pageSize * Math.Max(0, pageIndex - 1), pageSize);
+            return sqlHelper.QueryList<Commodity>(sql);
+        }
     }
 }

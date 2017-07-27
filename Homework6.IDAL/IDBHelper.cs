@@ -12,5 +12,6 @@ namespace Homework6.IDAL
         List<T> GetALL<T>(string sWhere = null, string tableName = null) where T : BaseModel;
         T GetById<T>(int id, string tableName = null) where T : BaseModel;
         int Update<T>(T t, string tableName = null) where T : BaseModel;
+        List<T> QueryList<T>(string sql);
     }
 }
