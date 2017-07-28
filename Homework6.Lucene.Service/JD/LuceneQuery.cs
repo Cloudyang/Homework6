@@ -10,9 +10,8 @@ using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
-using LuceneUtil=Lucene.Net.Util;
+using LuceneUtil = Lucene.Net.Util;
 using Lucene.Net.Store;
-using PanGu;
 using Homework6.IService.Lucene;
 using Homework6.Model.JD;
 using Homework6.Common.Utility;
@@ -55,6 +54,11 @@ namespace Homework6.Lucene.Service.JD
 
                 return ciList;
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return null;
+            }
             finally
             {
                 if (searcher != null)
@@ -88,7 +92,7 @@ namespace Homework6.Lucene.Service.JD
                 //--------------------------------------这里配置搜索条件
                 QueryParser parser = new QueryParser(LuceneUtil.Version.LUCENE_30, "title", analyzer);
                 Query query = parser.Parse(queryString);
-                
+
                 pageIndex = Math.Max(1, pageIndex);//索引从1开始
                 int startIndex = (pageIndex - 1) * pageSize;
                 int endIndex = pageIndex * pageSize;
@@ -117,7 +121,7 @@ namespace Homework6.Lucene.Service.JD
 
                 TopDocs docs = searcher.Search(query, numPriceFilter, 10000, sort);
                 //TopDocs docs = searcher.Search(query, null, 10000);
-                
+
                 totalCount = docs.TotalHits;
                 //PrintScores(docs, startIndex, endIndex, searcher);
                 for (int i = startIndex; i < endIndex && i < totalCount; i++)
@@ -154,15 +158,15 @@ namespace Homework6.Lucene.Service.JD
         private Commodity DocumentToCommodityInfo(Document doc)
         {
             return new Commodity()
-                       {
-                           Id = int.Parse(doc.Get("id")),
-                           Title = doc.Get("title"),
-                           ProductId = long.Parse(doc.Get("productid")),
-                           CategoryId = int.Parse(doc.Get("categoryid")),
-                           ImageUrl = doc.Get("iamgeurl"),
-                           Price = decimal.Parse(doc.Get("price")),
-                           Url = doc.Get("url")
-                       };
+            {
+                Id = int.Parse(doc.Get("id")),
+                Title = doc.Get("title"),
+                ProductId = long.Parse(doc.Get("productid")),
+                CategoryId = int.Parse(doc.Get("categoryid")),
+                ImageUrl = doc.Get("iamgeurl"),
+                Price = decimal.Parse(doc.Get("price")),
+                Url = doc.Get("url")
+            };
         }
 
         #endregion private

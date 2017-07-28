@@ -116,6 +116,7 @@ namespace Homework6.UI
 
         private void btnLuceneIndex_Click(object sender, EventArgs e)
         {
+            btnLuceneIndex.Enabled = false;
             Task.Run(() =>
             {
                 IndexBuilder.Build();

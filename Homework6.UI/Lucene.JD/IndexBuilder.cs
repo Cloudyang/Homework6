@@ -17,31 +17,34 @@ namespace Homework6.Lucene.JD
     {
         private static Logger logger = new Logger(typeof(IndexBuilder));
         private static List<string> PathSuffixList = new List<string>();
-        private static CancellationTokenSource CTS = new CancellationTokenSource();
+        private static CancellationTokenSource CTS = null;
 
         public static void Build()
         {
             try
             {
                 logger.Debug(string.Format("{0} BuildIndex开始",DateTime.Now));
-                for (int i = 0; i < 31; i++)
-                {
-                    IndexBuilderPerThread thread = new IndexBuilderPerThread(i+1, i.ToString("000"), CTS);
-                    thread.Process();
-                }
+                CTS = new CancellationTokenSource();
 
                 //List<Task> taskList = new List<Task>();
                 //TaskFactory taskFactory = new TaskFactory();
-                //CTS = new CancellationTokenSource();
-
                 //for (int i = 1; i < 31; i++)
                 //{
                 //    IndexBuilderPerThread thread = new IndexBuilderPerThread(i, i.ToString("000"), CTS);
                 //    PathSuffixList.Add(i.ToString("000"));
                 //    taskList.Add(taskFactory.StartNew(thread.Process));//开启一个线程   里面创建索引
                 //}
+
                 //taskList.Add(taskFactory.ContinueWhenAll(taskList.ToArray(), MergeIndex));
                 //Task.WaitAll(taskList.ToArray());
+
+                Parallel.For(1, 31, i =>
+                {
+                    IndexBuilderPerThread thread = new IndexBuilderPerThread(i, i.ToString("000"), CTS);
+                    PathSuffixList.Add(i.ToString("000"));
+                    thread.Process();//开启一个线程   里面创建索引
+                });
+                MergeIndex();
                 logger.Debug(string.Format("BuildIndex{0}", CTS.IsCancellationRequested ? "失败" : "成功"));
             }
             catch (Exception ex)
@@ -55,7 +58,7 @@ namespace Homework6.Lucene.JD
             }
         }
 
-        private static void MergeIndex(Task[] tasks)
+        private static void MergeIndex(Task[] tasks=null)
         {
             try
             {
