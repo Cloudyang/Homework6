@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Homework6.Common.Utility;
 using Homework6.IService.Crawler;
 using Homework6.Model.JD;
+using Homework6.Redis.Service;
 
 namespace Homework6.JD.Service
 {
@@ -22,6 +23,16 @@ namespace Homework6.JD.Service
         private WarnRepository warnRepository = new WarnRepository();
         private CommodityRepository commodityRepository = new CommodityRepository();
         private Category category = null;
+        private static RedisListService service = null;
+
+        static CommoditySearch()
+        {
+            try
+            {
+                service = new RedisListService(); //第1次尝试开启RedisListService服务
+            }
+            catch { }
+        }
 
         public CommoditySearch(Category _category)
         {
@@ -119,6 +130,8 @@ namespace Homework6.JD.Service
         {
             string html = HttpHelper.DownloadUrl(url);
             List<Commodity> commodityList = new List<Commodity>();
+
+
             try
             {
                 if (string.IsNullOrEmpty(html)) return commodityList;
@@ -193,6 +206,15 @@ namespace Homework6.JD.Service
                     else
                     {
                     }
+
+                    #region 新增Redis写入数据 
+                    if (service != null)
+                    {
+                        var commodityJson = JsonHelper.ObjToString(commodity);
+                        service.LPush("commodity", commodityJson);
+                    }
+                    #endregion
+
                     commodityList.Add(commodity);
                 }
                 Console.WriteLine("{0}一共获取了{1}条数据", url, commodityList.Count);

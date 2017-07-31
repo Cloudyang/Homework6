@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5EFD547E-D4C7-4ED9-96B3-B3E7682F86F8}</ProjectGuid>
+    <ProjectGuid>{5A998875-639C-4EE1-A74A-924B8E027BE8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Homework6.JD.Service</RootNamespace>
-    <AssemblyName>Homework6.JD.Service</AssemblyName>
+    <RootNamespace>Homework6.Redis.Service</RootNamespace>
+    <AssemblyName>Homework6.Redis.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,11 +30,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack, Version=1.5.1.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.5.1\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="ServiceStack.Common, Version=4.5.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Common.4.5.12\lib\net45\ServiceStack.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Interfaces.4.5.12\lib\portable-wp80+sl5+net45+win8+wpa81+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ServiceStack.Redis, Version=4.5.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Redis.4.5.12\lib\net45\ServiceStack.Redis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=4.5.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Text.4.5.12\lib\net45\ServiceStack.Text.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,38 +57,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CategoryRepository.cs" />
-    <Compile Include="CategorySearch.cs" />
-    <Compile Include="CommodityRepository.cs" />
-    <Compile Include="CommoditySearch.cs" />
+    <Compile Include="Init\RedisConfigInfo.cs" />
+    <Compile Include="Init\RedisManager.cs" />
+    <Compile Include="Interface\RedisBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WarnRepository.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Homework6.Common\Homework6.Common.csproj">
-      <Project>{19ed0547-cb5c-46e8-8f73-ec01cfb230f7}</Project>
-      <Name>Homework6.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Homework6.DAL\Homework6.DAL.csproj">
-      <Project>{9d142a06-71ce-4bc2-8bca-fc662631d4f9}</Project>
-      <Name>Homework6.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Homework6.IDAL\Homework6.IDAL.csproj">
-      <Project>{c9a2dc47-aa65-4910-a64b-ce4107906341}</Project>
-      <Name>Homework6.IDAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Homework6.IService\Homework6.IService.csproj">
-      <Project>{d677e5c3-9196-4ddf-9e88-34dd73824c71}</Project>
-      <Name>Homework6.IService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Homework6.Model\Homework6.Model.csproj">
-      <Project>{be89bc4a-26ec-4648-951c-f21b9b3fc835}</Project>
-      <Name>Homework6.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Homework6.Redis.Service\Homework6.Redis.Service.csproj">
-      <Project>{5a998875-639c-4ee1-a74a-924b8e027be8}</Project>
-      <Name>Homework6.Redis.Service</Name>
-    </ProjectReference>
+    <Compile Include="Service\RedisHashService.cs" />
+    <Compile Include="Service\RedisListService.cs" />
+    <Compile Include="Service\RedisSetService.cs" />
+    <Compile Include="Service\RedisStringService.cs" />
+    <Compile Include="Service\RedisZSetService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

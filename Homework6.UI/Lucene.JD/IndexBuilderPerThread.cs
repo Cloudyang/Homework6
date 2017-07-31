@@ -9,6 +9,7 @@ using Homework6.JD.Service;
 using Homework6.IService.Lucene;
 using Homework6.Lucene.Service.JD;
 using Homework6.Model.JD;
+using Homework6.Redis.Service;
 
 namespace Homework6.Lucene.JD
 {
@@ -18,6 +19,16 @@ namespace Homework6.Lucene.JD
         private int CurrentThreadNum = 1;
         private string PathSuffix = "";
         private CancellationTokenSource CTS = null;
+        private static RedisListService service = null;
+        static IndexBuilderPerThread()
+        {
+            try
+            {
+                service = new RedisListService(); //第1次尝试开启RedisListService服务
+            }
+            catch { }
+        }
+
         public IndexBuilderPerThread(int threadNum, string pathSuffix, CancellationTokenSource cts)
         {
             this.CurrentThreadNum = threadNum;
@@ -27,6 +38,7 @@ namespace Homework6.Lucene.JD
 
         public void Process()
         {
+
             try
             {
                 logger.Debug(string.Format("ThreadNum={0}开始创建", CurrentThreadNum));
@@ -36,8 +48,18 @@ namespace Homework6.Lucene.JD
                 int pageIndex = 1;
                 while (!CTS.IsCancellationRequested)
                 {
-                    List<Commodity> commodityList = commodityRepository.QueryList(CurrentThreadNum, pageIndex, 1000);
-                    if (commodityList == null || commodityList.Count == 0)
+                    List<Commodity> commodityList;
+                    if (service == null)
+                    {
+                        commodityList = commodityRepository.QueryList(CurrentThreadNum, pageIndex, 1000);
+                    }
+                    else
+                    {
+                        //新增代码，从Redis逐行获取
+                        var result = service.BlockingPopItemFromList("commodity", TimeSpan.FromHours(3));
+                        commodityList = new List<Commodity> { JsonHelper.JsonToObj<Commodity>(result) };
+                    }
+                    if (service == null && (commodityList == null || commodityList.Count == 0))
                     {
                         break;
                     }

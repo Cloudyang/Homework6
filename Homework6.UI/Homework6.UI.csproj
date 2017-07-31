@@ -115,6 +115,10 @@
       <Project>{be89bc4a-26ec-4648-951c-f21b9b3fc835}</Project>
       <Name>Homework6.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Homework6.Redis.Service\Homework6.Redis.Service.csproj">
+      <Project>{5a998875-639c-4ee1-a74a-924b8e027be8}</Project>
+      <Name>Homework6.Redis.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
