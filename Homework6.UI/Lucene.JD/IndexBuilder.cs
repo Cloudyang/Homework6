@@ -18,6 +18,7 @@ namespace Homework6.Lucene.JD
         private static Logger logger = new Logger(typeof(IndexBuilder));
         private static List<string> PathSuffixList = new List<string>();
         private static CancellationTokenSource CTS = null;
+        private static readonly object _lock = new object();
 
         public static void Build()
         {
@@ -41,7 +42,10 @@ namespace Homework6.Lucene.JD
                 Parallel.For(1, 31, i =>
                 {
                     IndexBuilderPerThread thread = new IndexBuilderPerThread(i, i.ToString("000"), CTS);
-                    PathSuffixList.Add(i.ToString("000"));
+                    lock (_lock)
+                    {
+                        PathSuffixList.Add(i.ToString("000"));
+                    }
                     thread.Process();//开启一个线程   里面创建索引
                 });
                 MergeIndex();

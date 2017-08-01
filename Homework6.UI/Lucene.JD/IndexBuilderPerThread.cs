@@ -20,6 +20,8 @@ namespace Homework6.Lucene.JD
         private string PathSuffix = "";
         private CancellationTokenSource CTS = null;
         private static RedisListService service = null;
+
+        private static readonly object _lock = new object();
         static IndexBuilderPerThread()
         {
             try
@@ -55,9 +57,19 @@ namespace Homework6.Lucene.JD
                     }
                     else
                     {
-                        //新增代码，从Redis逐行获取
-                        var result = service.BlockingPopItemFromList("commodity", TimeSpan.FromHours(3));
-                        commodityList = new List<Commodity> { JsonHelper.JsonToObj<Commodity>(result) };
+                        lock (_lock)
+                        {
+                            //新增代码，从Redis逐行获取
+                            var result = service.BlockingPopItemFromList("commodity", TimeSpan.FromSeconds(3));
+                            if (string.IsNullOrEmpty(result))
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                commodityList = new List<Commodity> { JsonHelper.JsonToObj<Commodity>(result) };
+                            }
+                        }
                     }
                     if (service == null && (commodityList == null || commodityList.Count == 0))
                     {

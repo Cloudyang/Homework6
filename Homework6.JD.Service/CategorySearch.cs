@@ -21,12 +21,12 @@ namespace Homework6.JD.Service
         private static Logger logger = new Logger(typeof(CategorySearch));
         private int _Count = 1;//每次都得new一个 重新初始化类别
 
-        private Action<List<Category>> _action;
+        private Action<List<Category>> UpdateUI;
         public CategorySearch()
         {     }
-        public CategorySearch(Action<List<Category>> action)
+        public CategorySearch(Action<List<Category>> updateUI)
         {
-            this._action = action;
+            this.UpdateUI = updateUI;
         }
 
         public void Crawler()
@@ -53,7 +53,7 @@ namespace Homework6.JD.Service
                     categoryList.AddRange(this.First(node.InnerHtml, k++.ToString("00") + "f", "root"));
                 }
                 ///新增代码用于更新dgvCrawler数据视图框
-                _action?.Invoke(categoryList);
+                UpdateUI?.Invoke(categoryList);
 
                 CategoryRepository categoryRepository = new CategoryRepository();
                 categoryRepository.Save(categoryList);

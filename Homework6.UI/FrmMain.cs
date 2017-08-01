@@ -120,6 +120,10 @@ namespace Homework6.UI
             Task.Run(() =>
             {
                 IndexBuilder.Build();
+                base.Invoke(new Action(() =>
+                {
+                    btnLuceneIndex.Enabled = true;
+                }));
             });
         }
 

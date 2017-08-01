@@ -25,6 +25,8 @@ namespace Homework6.JD.Service
         private Category category = null;
         private static RedisListService service = null;
 
+        private static readonly object _lock = new object();
+
         static CommoditySearch()
         {
             try
@@ -207,13 +209,17 @@ namespace Homework6.JD.Service
                     {
                     }
 
+
                     #region 新增Redis写入数据 
                     if (service != null)
                     {
                         var commodityJson = JsonHelper.ObjToString(commodity);
-                        service.LPush("commodity", commodityJson);
+                        lock (_lock)
+                        {
+                            service.LPush("commodity", commodityJson);
+                        }
+                        #endregion
                     }
-                    #endregion
 
                     commodityList.Add(commodity);
                 }
@@ -223,7 +229,9 @@ namespace Homework6.JD.Service
             {
                 logger.Error(string.Format("GetCommodityList出现异常,url={0}", url), ex);
             }
-            return GetCommodityPrice(category, commodityList);
+            ///获取价格异常暂时停止调用
+            // return GetCommodityPrice(category, commodityList);
+            return commodityList;
         }
 
         /// <summary>
