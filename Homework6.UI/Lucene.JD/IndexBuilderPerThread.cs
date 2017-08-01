@@ -38,6 +38,11 @@ namespace Homework6.Lucene.JD
             this.CTS = cts;
         }
 
+        public IndexBuilderPerThread(CancellationTokenSource cts)
+        {
+            this.CTS = cts;
+        }
+
         public void Process()
         {
 
@@ -45,17 +50,31 @@ namespace Homework6.Lucene.JD
             {
                 logger.Debug(string.Format("ThreadNum={0}开始创建", CurrentThreadNum));
                 CommodityRepository commodityRepository = new CommodityRepository();
-                ILuceneBulid builder = new LuceneBulid();
+                LuceneBulid builder = new LuceneBulid();
                 bool isFirst = true;
                 int pageIndex = 1;
-                while (!CTS.IsCancellationRequested)
+                if (service == null)
                 {
-                    List<Commodity> commodityList;
-                    if (service == null)
+                    while (!CTS.IsCancellationRequested)
                     {
+                        List<Commodity> commodityList;
                         commodityList = commodityRepository.QueryList(CurrentThreadNum, pageIndex, 1000);
+                        if (commodityList == null || commodityList.Count == 0)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            builder.BuildIndex(commodityList, PathSuffix, isFirst);
+                            logger.Debug(string.Format("ThreadNum={0}完成{1}条的创建", CurrentThreadNum, 1000 * pageIndex++));
+                            isFirst = false;
+                        }
                     }
-                    else
+
+                }
+                else
+                {
+                    while (!CTS.IsCancellationRequested)
                     {
                         lock (_lock)
                         {
@@ -67,25 +86,13 @@ namespace Homework6.Lucene.JD
                             }
                             else
                             {
-                                commodityList = new List<Commodity> { JsonHelper.JsonToObj<Commodity>(result) };
+                                var commodity = JsonHelper.JsonToObj<Commodity>(result);
+                                builder.InsertIndex(commodity);
                             }
                         }
                     }
-                    if (service == null && (commodityList == null || commodityList.Count == 0))
-                    {
-                        break;
-                    }
-                    //else if (pageIndex == 11)
-                    //{
-                    //    break;//为了测试  只做10000条数据
-                    //}
-                    else
-                    {
-                        builder.BuildIndex(commodityList, PathSuffix, isFirst);
-                        logger.Debug(string.Format("ThreadNum={0}完成{1}条的创建", CurrentThreadNum, 1000 * pageIndex++));
-                        isFirst = false;
-                    }
                 }
+
             }
             catch (Exception ex)
             {

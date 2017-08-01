@@ -339,7 +339,10 @@ namespace Homework6.Lucene.Service.JD
         {
             try
             {
-                writer.AddDocument(ParseCItoDoc(ci));
+                if (ci != null)
+                {
+                    writer.AddDocument(ParseCItoDoc(ci));
+                }
             }
             catch (Exception ex)
             {

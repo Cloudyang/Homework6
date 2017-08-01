@@ -17,7 +17,7 @@ namespace Homework6.Lucene.JD
     {
         private static Logger logger = new Logger(typeof(IndexBuilder));
         private static List<string> PathSuffixList = new List<string>();
-        private static CancellationTokenSource CTS = null;
+        private static CancellationTokenSource CTS = new CancellationTokenSource();
         private static readonly object _lock = new object();
 
         public static void Build()
@@ -25,7 +25,6 @@ namespace Homework6.Lucene.JD
             try
             {
                 logger.Debug(string.Format("{0} BuildIndex开始",DateTime.Now));
-                CTS = new CancellationTokenSource();
 
                 //List<Task> taskList = new List<Task>();
                 //TaskFactory taskFactory = new TaskFactory();
@@ -39,16 +38,21 @@ namespace Homework6.Lucene.JD
                 //taskList.Add(taskFactory.ContinueWhenAll(taskList.ToArray(), MergeIndex));
                 //Task.WaitAll(taskList.ToArray());
 
-                Parallel.For(1, 31, i =>
-                {
-                    IndexBuilderPerThread thread = new IndexBuilderPerThread(i, i.ToString("000"), CTS);
-                    lock (_lock)
-                    {
-                        PathSuffixList.Add(i.ToString("000"));
-                    }
-                    thread.Process();//开启一个线程   里面创建索引
+                //Parallel.For(1, 31, i =>
+                //{
+                //    IndexBuilderPerThread thread = new IndexBuilderPerThread(i, i.ToString("000"), CTS);
+                //    lock (_lock)
+                //    {
+                //        PathSuffixList.Add(i.ToString("000"));
+                //    }
+                //    thread.Process();//开启一个线程   里面创建索引
+                //});
+                //MergeIndex();
+
+                IndexBuilderPerThread thread = new IndexBuilderPerThread(CTS);
+                Task.Factory.StartNew(() => {
+                    thread.Process();
                 });
-                MergeIndex();
                 logger.Debug(string.Format("BuildIndex{0}", CTS.IsCancellationRequested ? "失败" : "成功"));
             }
             catch (Exception ex)
@@ -62,6 +66,11 @@ namespace Homework6.Lucene.JD
             }
         }
 
+
+        /// <summary>
+        /// 合并索引可以迁入process内部实现
+        /// </summary>
+        /// <param name="tasks"></param>
         private static void MergeIndex(Task[] tasks=null)
         {
             try
