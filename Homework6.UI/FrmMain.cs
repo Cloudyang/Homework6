@@ -63,7 +63,7 @@ namespace Homework6.UI
             ((Button)sender).Enabled = false;
             btnResume.Enabled = false;
             btnCleanData.Enabled = false;
-            btnLuceneIndex.Enabled = false;
+        //    btnLuceneIndex.Enabled = false;
         }
 
         private void dgvCrawler_Update(List<Category> obj)
@@ -89,7 +89,7 @@ namespace Homework6.UI
             btnResume.Enabled = true;
             btnPause.Enabled = false;
             btnStop.Enabled = false;
-            btnLuceneIndex.Enabled = true;
+      //      btnLuceneIndex.Enabled = true;
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -119,7 +119,9 @@ namespace Homework6.UI
             btnLuceneIndex.Enabled = false;
             Task.Run(() =>
             {
-                IndexBuilder.Build();
+                IndexBuilder.Build();                
+            }).ContinueWith(t=>
+            {
                 base.Invoke(new Action(() =>
                 {
                     btnLuceneIndex.Enabled = true;

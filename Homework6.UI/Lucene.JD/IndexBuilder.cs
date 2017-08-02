@@ -17,14 +17,15 @@ namespace Homework6.Lucene.JD
     {
         private static Logger logger = new Logger(typeof(IndexBuilder));
         private static List<string> PathSuffixList = new List<string>();
-        private static CancellationTokenSource CTS = new CancellationTokenSource();
         private static readonly object _lock = new object();
 
         public static void Build()
         {
+            CancellationTokenSource CTS = new CancellationTokenSource();
             try
             {
-                logger.Debug(string.Format("{0} BuildIndex开始",DateTime.Now));
+                logger.Debug(string.Format("{0} BuildIndex开始", DateTime.Now));
+                #region 原代码已注释
 
                 //List<Task> taskList = new List<Task>();
                 //TaskFactory taskFactory = new TaskFactory();
@@ -48,15 +49,15 @@ namespace Homework6.Lucene.JD
                 //    thread.Process();//开启一个线程   里面创建索引
                 //});
                 //MergeIndex();
+                #endregion
 
                 IndexBuilderPerThread thread = new IndexBuilderPerThread(CTS);
-                Task.Factory.StartNew(() => {
-                    thread.Process();
-                });
+                thread.Process();
                 logger.Debug(string.Format("BuildIndex{0}", CTS.IsCancellationRequested ? "失败" : "成功"));
             }
             catch (Exception ex)
             {
+                CTS.Cancel();
                 logger.Error("BuildIndex出现异常", ex);
             }
             finally
@@ -71,17 +72,17 @@ namespace Homework6.Lucene.JD
         /// 合并索引可以迁入process内部实现
         /// </summary>
         /// <param name="tasks"></param>
-        private static void MergeIndex(Task[] tasks=null)
+        private static void MergeIndex(Task[] tasks = null)
         {
             try
             {
-                if (CTS.IsCancellationRequested) return;
+              //  if (CTS.IsCancellationRequested) return;
                 ILuceneBulid builder = new LuceneBulid();
                 builder.MergeIndex(PathSuffixList.ToArray());
             }
             catch (Exception ex)
             {
-                CTS.Cancel();
+             //   CTS.Cancel();
                 logger.Error("MergeIndex出现异常", ex);
             }
         }
